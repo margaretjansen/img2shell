@@ -28,3 +28,8 @@ Usage:  exifTl.py -i <inputimage> -o <outputimage> -p <payloadurl> -d <destinati
 
 
 The payload embedded in the image is simply a bit of php code that will download our hidden file, then save it with the new name on the target host
+
+Final step is to upload this image via a weak image uploader that will not check exif meta data for executable code.
+If it works, the 1st payload will execute, and download the main payload from your remote hosting, decode it, and save it as a php file on your target host.
+This php file can then be used as a file manager, or as a shell. Look at weevely for shell access.
+Just notice that weevely shells still need to get encoded, seeing as their obfiscation is not that strong and can be detected by security software.
