@@ -3,13 +3,13 @@
 ******PLEASE NOTE********
 This is for educational purpose only.
 In all likliness these exploits has already been patched on all servers on the net.
-This file is NOT to be used against any machine that you not not own or have an obligation to pen tesst
-mostly this file was created for me to try out python.
+This file is NOT to be used against any machine that you not not own or have an obligation to pentest.
+Mostly these files was created for me to try out python and nothing more.
 
 
 Use ext_payloadencoder.py to to encode your final php exploit payload.
 This can be be something like tiny file manager or a php shell.
-This files will be hosted on a domain that you control. However, host providers 
+This file will be hosted on a domain that you control. However, host providers 
 do not like the idea of malware to be hosted with them, so we need to hide what it is we are hosting.
 We do a simple base64 encoding, then rotate each character by 13. This then gives us something that 
 looks like base64 but is in fact not.
